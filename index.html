@@ -35,8 +35,9 @@
     canvas {
       display: block; /* removes unwanted whitespace */
       background: #fff; /* ensure canvas itself is also white */
-      height: 100vh;
+      height: calc(100vh - 120px); /* Account for header and controls */
       width: 100%;
+      margin-top: 0;
     }
     #header {
       position: relative;
@@ -122,7 +123,7 @@
     }
     
     .scroll-indicator {
-      position: fixed;
+      position: absolute;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
@@ -184,8 +185,6 @@
 
   </div>
 
-  <canvas id="canvas"></canvas>
-  
   <div id="header">
     <strong>JUNGO</strong><span class="subtitle">- 眼球運動で脳と心を整える</span>
   </div>
@@ -212,6 +211,8 @@
       <button id="playBtn">⏸ 停止</button>
     </div>
   </div>
+  
+  <canvas id="canvas"></canvas>
 
   <div class="scroll-indicator">
     <span>↓ スクロールしてEMDRについて学ぶ</span>

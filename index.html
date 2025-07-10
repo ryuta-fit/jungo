@@ -143,7 +143,7 @@
       font-family: 'Hiragino Kaku Gothic ProN', 'メイリオ', sans-serif;
       z-index: 9999;
       opacity: 1;
-      transition: opacity 2s ease;
+      transition: opacity 4s linear;
     }
     #intro.fade-out {
       opacity: 0;
@@ -170,7 +170,7 @@
   <!-- Intro overlay -->
   <div id="intro">
     <h1>JUNGO</h1>
-    <div class="intro-book">📖</div>
+
   </div>
 
   <canvas id="canvas"></canvas>
@@ -274,15 +274,12 @@
 
     /* ---------- Intro overlay logic ---------- */
     const intro = document.getElementById('intro');
-    const introBook = document.querySelector('.intro-book');
-    // Show book after short delay
-    setTimeout(()=>{
-      introBook.classList.add('show');
-    }, 500);
+    // book icon removed
+    
     // Fade out entire intro after a few seconds
     setTimeout(()=>{
       intro.classList.add('fade-out');
-    }, 3500);
+    }, 1000);
 
 
     function resize() {

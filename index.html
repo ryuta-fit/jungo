@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>JUNGO</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #fff; /* Pure white background */
+    }
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    canvas {
+      display: block; /* removes unwanted whitespace */
+      background: #fff; /* ensure canvas itself is also white */
+      height: 100vh;
+      width: 100%;
+    }
+    #controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      color: #000;
+      font-family: sans-serif;
+      background: rgba(255,255,255,0.9);
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    #controls strong {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+    #controls .subtitle {
+      font-size: 14px;
+      font-weight: normal;
+      color: #666;
+      margin-left: 5px;
+    }
+    #controls .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #controls label {
+      font-weight: 500;
+    }
+    
+    #content {
+      padding: 60px 20px 40px;
+      max-width: 800px;
+      margin: 0 auto;
+      font-family: 'Hiragino Kaku Gothic ProN', 'メイリオ', sans-serif;
+      line-height: 1.8;
+      color: #333;
+    }
+    
+    #content h2 {
+      font-size: 32px;
+      margin: 40px 0 25px;
+      color: #1a1a1a;
+      font-weight: 700;
+      text-align: center;
+    }
+    
+    #content h3 {
+      font-size: 22px;
+      margin: 35px 0 18px;
+      color: #2c2c2c;
+      font-weight: 600;
+    }
+    
+    #content p {
+      margin: 15px 0;
+      text-align: justify;
+    }
+    
+    #content ul {
+      margin: 15px 0;
+      padding-left: 30px;
+    }
+    
+    #content li {
+      margin: 8px 0;
+    }
+    
+    .scroll-indicator {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #666;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="controls">
+    <strong>JUNGO</strong><span class="subtitle">- 眼球運動で心を整えるツール</span>
+    <div class="control-group">
+      <label for="speedSlider">速度:</label>
+      <input type="range" id="speedSlider" min="3" max="20" value="6">
+    </div>
+    <div class="control-group">
+      <label for="colorSelect">色:</label>
+      <select id="colorSelect">
+        <option value="0">白/黒</option>
+        <option value="1">黒/白</option>
+        <option value="2">薄青/赤</option>
+        <option value="3">クリーム/紺</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <button id="playBtn">⏸ 停止</button>
+    </div>
+    <div class="control-group">
+      <label for="sizeSlider">大きさ:</label>
+      <input type="range" id="sizeSlider" min="10" max="100" value="20">
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>↓ スクロールしてEMDRについて学ぶ</span>
+  </div>
+
+  <div id="content">
+    <h2>眼球運動が脳を癒すメカニズム</h2>
+    <p>
+      上の動く球を見つめていると、不思議と心が落ち着いてきませんか？<br>
+      これは<strong>EMDR（眼球運動による脱感作と再処理法）</strong>という心理療法の原理を使ったものです。
+    </p>
+
+    <h3>🧠 なぜ目を動かすと心が落ち着くの？</h3>
+    <p>
+      目を左右に動かすと、脳の右半球と左半球が交互に活性化されます。<br>
+      これは、まるで脳の右側と左側が「対話」を始めるようなもの。<br>
+      この対話によって、凍りついていた記憶や感情が、ゆっくりと解きほぐされていくのです。
+    </p>
+
+    <h3>💡 トラウマ記憶が書き換わる仕組み</h3>
+    <p>
+      私たちの脳は、強いストレスを受けると記憶を「凍結」させてしまうことがあります。<br>
+      EMDRは、この凍結した記憶を一度「解凍」し、新しい視点を加えて「再凍結」する作業なのです。
+    </p>
+    <p style="background: #f0f8ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
+      <strong>例えば：</strong><br>
+      「怖い体験」という記憶が →「怖かったけど、今は安全」という記憶に更新される
+    </p>
+
+    <h3>🌿 体の緊張もほぐれる理由</h3>
+    <p>
+      EMDRは心だけでなく、体にも働きかけます。<br>
+      眼球運動によって：
+    </p>
+    <ul style="line-height: 2;">
+      <li>🔥 戦闘モードの<strong>交感神経</strong>が落ち着く</li>
+      <li>😌 リラックスモードの<strong>副交感神経</strong>が活性化</li>
+      <li>💚 安心感をもたらす<strong>迷走神経</strong>が整う</li>
+    </ul>
+
+    <h3>🔄 脳の可塑性を活かした治療法</h3>
+    <p>
+      脳には「神経可塑性」という素晴らしい能力があります。<br>
+      これは、脳が新しい回路を作ったり、古い回路を書き換えたりできる能力のこと。<br>
+      EMDRはこの能力を最大限に活用して、トラウマの影響を和らげます。
+    </p>
+
+    <h3>✨ EMDRで期待できる変化</h3>
+    <div style="background: #fffef0; padding: 20px; border-radius: 8px; margin: 20px 0;">
+      <p><strong>多くの人が体験する変化：</strong></p>
+      <ul style="line-height: 2; list-style: none; padding-left: 0;">
+        <li>😊 過去の出来事を思い出しても、心が乱れなくなる</li>
+        <li>🌙 悪夢やフラッシュバックが減る</li>
+        <li>🚶 避けていた場所や状況に向き合えるようになる</li>
+        <li>💪 自分に対する信頼感が戻ってくる</li>
+        <li>🤝 人との関わりが楽になる</li>
+      </ul>
+    </div>
+
+    <h3>📚 もっと詳しく知りたい方へ</h3>
+    <p>
+      EMDRは1987年にフランシーン・シャピロ博士によって開発され、<br>
+      現在ではWHO（世界保健機関）も推奨する、科学的根拠のある治療法です。
+    </p>
+
+    <p style="margin-top: 40px; padding: 20px; background: #f5f5f5; border-radius: 8px;">
+      <strong>注意：</strong>このツールは教育目的のデモンストレーションです。実際のEMDR療法は、訓練を受けた専門家の指導の下で行う必要があります。
+      トラウマに関する問題を抱えている場合は、必ず専門の医療機関や心理療法士にご相談ください。
+    </p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    
+    // Hide scroll indicator when scrolled
+    window.addEventListener('scroll', () => {
+      const scrollIndicator = document.querySelector('.scroll-indicator');
+      if (window.scrollY > 100) {
+        scrollIndicator.style.opacity = '0';
+      } else {
+        scrollIndicator.style.opacity = '1';
+      }
+    });
+    window.addEventListener('resize', resize);
+    resize();
+
+    let x = 50; // initial x position of the circle
+    const sizeSlider = document.getElementById('sizeSlider');
+    let radius = Number(sizeSlider.value); // circle radius
+    let direction = 1; // 1 for right, -1 for left
+    const slider = document.getElementById('speedSlider');
+    let speed = Number(slider.value); // pixels per frame
+    const colorSelect = document.getElementById('colorSelect');
+
+    const colorSchemes = [
+      { bg: '#ffffff', ball: '#000000' }, // 白/黒
+      { bg: '#000000', ball: '#ffffff' }, // 黒/白
+      { bg: '#e0f7ff', ball: '#ff0033' }, // 薄青/赤
+      { bg: '#fffbe6', ball: '#002b5b' }  // クリーム/紺
+    ];
+
+    let currentScheme = colorSchemes[0];
+    canvas.style.background = currentScheme.bg;
+    let ballColor = currentScheme.ball;
+    slider.addEventListener('input', () => {
+      speed = Number(slider.value);
+    });
+
+    sizeSlider.addEventListener('input', () => {
+      radius = Number(sizeSlider.value);
+    });
+
+    colorSelect.addEventListener('change', () => {
+      currentScheme = colorSchemes[colorSelect.value];
+      canvas.style.background = currentScheme.bg;
+      ballColor = currentScheme.ball;
+    });
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // clear the canvas
+
+      // draw 3D sphere with gradient
+      const centerY = canvas.height / 2;
+      
+      // Create radial gradient for 3D effect
+      const gradient = ctx.createRadialGradient(
+        x - radius/3, centerY - radius/3, radius/10,  // highlight position
+        x, centerY, radius * 1.2
+      );
+      
+      // Add color stops based on current ball color
+      if (ballColor === '#000000') { // black ball
+        gradient.addColorStop(0, '#ffffff');
+        gradient.addColorStop(0.1, '#808080');
+        gradient.addColorStop(0.3, '#404040');
+        gradient.addColorStop(0.8, '#000000');
+        gradient.addColorStop(1, '#000000');
+      } else if (ballColor === '#ffffff') { // white ball
+        gradient.addColorStop(0, '#ffffff');
+        gradient.addColorStop(0.3, '#f0f0f0');
+        gradient.addColorStop(0.6, '#d0d0d0');
+        gradient.addColorStop(0.9, '#a0a0a0');
+        gradient.addColorStop(1, '#808080');
+      } else if (ballColor === '#ff0033') { // red ball
+        gradient.addColorStop(0, '#ffccdd');
+        gradient.addColorStop(0.1, '#ff6688');
+        gradient.addColorStop(0.3, '#ff3355');
+        gradient.addColorStop(0.8, '#cc0022');
+        gradient.addColorStop(1, '#880011');
+      } else if (ballColor === '#002b5b') { // navy ball
+        gradient.addColorStop(0, '#6699cc');
+        gradient.addColorStop(0.1, '#3366aa');
+        gradient.addColorStop(0.3, '#003366');
+        gradient.addColorStop(0.8, '#002244');
+        gradient.addColorStop(1, '#001122');
+      }
+
+      // Draw main sphere
+      ctx.beginPath();
+      ctx.arc(x, centerY, radius, 0, Math.PI * 2);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+      
+      // Add subtle shadow
+      ctx.beginPath();
+      ctx.arc(x, centerY + radius + 3, radius * 0.8, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+      ctx.filter = 'blur(8px)';
+      ctx.fill();
+      ctx.filter = 'none';
+
+      // update position for next frame
+      x += direction * speed;
+
+      // reverse direction when hitting left or right edge
+      if (x + radius > canvas.width || x - radius < 0) {
+        direction *= -1;
+      }
+
+      // animation frame handled by step() function
+    }
+
+    // ------------ Animation loop control ------------
+    let running = true;
+    let animId;
+    function step(){
+      if(!running) return;
+      draw();
+      animId = requestAnimationFrame(step);
+    }
+
+    const playBtn = document.getElementById('playBtn');
+    playBtn.addEventListener('click', () => {
+      if(running){
+        running = false;
+        playBtn.textContent = '▶ 再生';
+      } else {
+        running = true;
+        playBtn.textContent = '⏸ 停止';
+        step();
+      }
+    });
+
+    step(); // start animation
+
+  </script>
+</body>
+</html>

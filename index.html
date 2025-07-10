@@ -38,29 +38,44 @@
       height: 100vh;
       width: 100%;
     }
-    #controls {
+    #header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       color: #000;
       font-family: sans-serif;
-      background: rgba(255,255,255,0.9);
-      padding: 10px 20px;
+      background: rgba(255,255,255,0.95);
+      padding: 15px 20px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      gap: 20px;
+      text-align: center;
+      z-index: 1000;
     }
-    #controls strong {
-      font-size: 18px;
-      margin-right: 10px;
+    #header strong {
+      font-size: 20px;
     }
-    #controls .subtitle {
+    #header .subtitle {
       font-size: 14px;
       font-weight: normal;
       color: #666;
       margin-left: 5px;
+    }
+    
+    #controls {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,0.9);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #e0e0e0;
+      font-family: sans-serif;
+      z-index: 999;
     }
     #controls .control-group {
       display: flex;
@@ -69,10 +84,12 @@
     }
     #controls label {
       font-weight: 500;
+      font-size: 14px;
+      color: #333;
     }
     
     #content {
-      padding: 60px 20px 40px;
+      padding: 120px 20px 40px;
       max-width: 800px;
       margin: 0 auto;
       font-family: 'Hiragino Kaku Gothic ProN', 'メイリオ', sans-serif;
@@ -173,8 +190,12 @@
   </div>
 
   <canvas id="canvas"></canvas>
-  <div id="controls">
+  
+  <div id="header">
     <strong>JUNGO</strong><span class="subtitle">- 眼球運動で脳と心を整える</span>
+  </div>
+  
+  <div id="controls">
     <div class="control-group">
       <label for="speedSlider">速度:</label>
       <input type="range" id="speedSlider" min="3" max="20" value="6">
@@ -189,11 +210,11 @@
       </select>
     </div>
     <div class="control-group">
-      <button id="playBtn">⏸ 停止</button>
-    </div>
-    <div class="control-group">
       <label for="sizeSlider">大きさ:</label>
       <input type="range" id="sizeSlider" min="10" max="100" value="20">
+    </div>
+    <div class="control-group">
+      <button id="playBtn">⏸ 停止</button>
     </div>
   </div>
 

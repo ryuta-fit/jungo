@@ -31,6 +31,8 @@
     body {
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     }
     canvas {
       display: block; /* removes unwanted whitespace */
@@ -38,6 +40,7 @@
       height: calc(100vh - 120px); /* Account for header and controls */
       width: 100%;
       margin-top: 0;
+      touch-action: none; /* Prevent touch gestures on canvas */
     }
     #header {
       position: relative;
@@ -123,7 +126,7 @@
     }
     
     .scroll-indicator {
-      position: absolute;
+      position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
@@ -133,6 +136,39 @@
       flex-direction: column;
       align-items: center;
       animation: bounce 2s infinite;
+      z-index: 100;
+    }
+    
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+      .scroll-indicator {
+        animation: none;
+      }
+      
+      #controls {
+        padding: 8px 15px;
+        gap: 15px;
+      }
+      
+      #controls .control-group {
+        gap: 5px;
+      }
+      
+      #controls label {
+        font-size: 12px;
+      }
+      
+      #header {
+        padding: 12px 15px;
+      }
+      
+      #header strong {
+        font-size: 18px;
+      }
+      
+      #header .subtitle {
+        font-size: 12px;
+      }
     }
     
     @keyframes bounce {

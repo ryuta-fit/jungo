@@ -1,4 +1,4 @@
-# JUNGO - 眼球運動で脳を整えるツール
+# JUNGO - 眼球運動で脳と心を整える
 
 JUNGOは、EMDR（Eye Movement Desensitization and Reprocessing）の原理を活用した、ブラウザベースのリラクゼーションツールです。
 

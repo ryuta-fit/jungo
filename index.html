@@ -335,6 +335,8 @@
     function resize() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      // Update speed multiplier on resize
+      speedMultiplier = window.innerWidth <= 768 ? 0.7 : 1.0;
     }
     
     // Hide scroll indicator when scrolled
@@ -356,6 +358,9 @@
     const slider = document.getElementById('speedSlider');
     let speed = Number(slider.value); // pixels per frame
     const colorSelect = document.getElementById('colorSelect');
+    
+    // Adjust speed for mobile (30% slower)
+    let speedMultiplier = window.innerWidth <= 768 ? 0.7 : 1.0;
 
     const colorSchemes = [
       { bg: '#ffffff', ball: '#000000' }, // 白/黒
@@ -435,7 +440,7 @@
       ctx.filter = 'none';
 
       // update position for next frame
-      x += direction * speed;
+      x += direction * speed * speedMultiplier;
 
       // reverse direction when hitting left or right edge
       if (x + radius > canvas.width || x - radius < 0) {

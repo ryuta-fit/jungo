@@ -348,6 +348,10 @@
         scrollIndicator.style.opacity = '1';
       }
     });
+    
+    // Define variables before resize is called
+    let speedMultiplier = window.innerWidth <= 768 ? 0.7 : 1.0;
+    
     window.addEventListener('resize', resize);
     resize();
 
@@ -358,9 +362,6 @@
     const slider = document.getElementById('speedSlider');
     let speed = Number(slider.value); // pixels per frame
     const colorSelect = document.getElementById('colorSelect');
-    
-    // Adjust speed for mobile (30% slower)
-    let speedMultiplier = window.innerWidth <= 768 ? 0.7 : 1.0;
 
     const colorSchemes = [
       { bg: '#ffffff', ball: '#000000' }, // 白/黒
